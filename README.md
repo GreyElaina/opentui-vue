@@ -1,12 +1,20 @@
 # @opentui/vue
 
-Vue.js support for [OpenTUI](https://github.com/sst/opentui).
+Vue.js renderer for [@opentui/core](https://www.npmjs.com/package/@opentui/core).
+
+This repository is maintained as a standalone package (no monorepo workspace dependency).
 
 ## Run examples locally
 
 ```bash
 bun install
 bun run start:example
+```
+
+## Validate before publish
+
+```bash
+bun run check
 ```
 
 ## Setup Guide
@@ -76,6 +84,7 @@ const result = await Bun.build({
   outdir: "./dist",
   target: "bun",
   plugins: [pluginVue3()],
+  write: true,
 })
 
 if (!result.success) {

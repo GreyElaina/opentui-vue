@@ -39,6 +39,7 @@
   },
   "scripts": {
     "build": "bun scripts/build.ts",
+    "check": "bun run typecheck && bun test && bun run build",
     "publish": "bun scripts/publish.ts",
     "start:example": "bun run typecheck && bun scripts/build-examples.ts && bun example/dist/main.js",
     "test": "bun test",

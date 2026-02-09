@@ -14,6 +14,7 @@ const result = await Bun.build({
   ],
   minify: process.env.NODE_ENV === "production",
   sourcemap: process.env.NODE_ENV !== "production" ? "external" : "none",
+  write: true,
 })
 
 if (!result.success) {

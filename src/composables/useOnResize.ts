@@ -1,4 +1,3 @@
-// packages/vue/src/composables/useOnResize.ts
 import { onMounted, onUnmounted } from "vue"
 import { useCliRenderer } from "./useCliRenderer"
 

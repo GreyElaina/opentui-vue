@@ -17,7 +17,7 @@ const rootDir = resolve(__dirname, "..")
 const packageJson: PackageJson = JSON.parse(readFileSync(join(rootDir, "package.json"), "utf8"))
 
 console.log(`Publishing @opentui/vue@${packageJson.version}...`)
-console.log("Make sure you've run the pre-publish validation script first!")
+console.log("Run `bun run check` before publishing to validate typecheck/tests/build.")
 
 const distDir = join(rootDir, "dist")
 

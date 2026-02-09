@@ -1,4 +1,3 @@
-// packages/vue/src/composables/useTerminalDimensions.ts
 import { ref } from "vue"
 import { useCliRenderer } from "./useCliRenderer"
 import { useOnResize } from "./useOnResize"

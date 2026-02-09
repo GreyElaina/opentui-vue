@@ -65,18 +65,30 @@ if (!packageJson.module) {
   process.exit(1)
 }
 
-console.log("Building main entry point...")
-const mainBuildResult = await Bun.build({
-  entrypoints: [join(rootDir, packageJson.module)],
-  target: "bun",
-  outdir: join(rootDir, "dist"),
-  external: externalDeps,
-  //   splitting: true,
-})
+const entryBuilds = [
+  { label: "main entry point", entrypoint: join(rootDir, packageJson.module) },
+  { label: "composables subpath", entrypoint: join(rootDir, "src/composables/index.ts") },
+  { label: "components subpath", entrypoint: join(rootDir, "src/elements.ts") },
+  { label: "devtools subpath", entrypoint: join(rootDir, "src/devtools/index.ts") },
+  { label: "resolver subpath", entrypoint: join(rootDir, "src/resolver.ts") },
+] as const
 
-if (!mainBuildResult.success) {
-  console.error("Build failed for main entry point:", mainBuildResult.logs)
-  process.exit(1)
+for (const buildTarget of entryBuilds) {
+  console.log(`Building ${buildTarget.label}...`)
+
+  const result = await Bun.build({
+    entrypoints: [buildTarget.entrypoint],
+    target: "bun",
+    outdir: distDir,
+    root: rootDir,
+    write: true,
+    external: externalDeps,
+  })
+
+  if (!result.success) {
+    console.error(`Build failed for ${buildTarget.label}:`, result.logs)
+    process.exit(1)
+  }
 }
 
 console.log("Generating TypeScript declarations...")
@@ -127,6 +139,26 @@ const exports = {
     types: "./index.d.ts",
     import: "./index.js",
     require: "./index.js",
+  },
+  "./composables": {
+    types: "./src/composables/index.d.ts",
+    import: "./src/composables/index.js",
+    require: "./src/composables/index.js",
+  },
+  "./components": {
+    types: "./src/elements.d.ts",
+    import: "./src/elements.js",
+    require: "./src/elements.js",
+  },
+  "./devtools": {
+    types: "./src/devtools/index.d.ts",
+    import: "./src/devtools/index.js",
+    require: "./src/devtools/index.js",
+  },
+  "./resolver": {
+    types: "./src/resolver.d.ts",
+    import: "./src/resolver.js",
+    require: "./src/resolver.js",
   },
 }
 
