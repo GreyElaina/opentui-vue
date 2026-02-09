@@ -2,11 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "types": ["bun-types", "node"],
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@opentui/core": ["../core/dist"],
-      "@opentui/core/*": ["../core/dist/*"]
-    }
+    "skipLibCheck": true
   }
 }

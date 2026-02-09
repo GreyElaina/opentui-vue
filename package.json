@@ -4,12 +4,15 @@
   "description": "Vue renderer for OpenTUI",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sst/opentui",
-    "directory": "packages/vue"
+    "url": "https://github.com/GreyElaina/opentui-vue"
+  },
+  "homepage": "https://github.com/GreyElaina/opentui-vue",
+  "bugs": {
+    "url": "https://github.com/GreyElaina/opentui-vue/issues"
   },
   "module": "index.ts",
   "type": "module",
-  "private": true,
+  "private": false,
   "main": "index.ts",
   "license": "MIT",
   "exports": {
@@ -42,7 +45,7 @@
     "typecheck": "bunx vue-tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {
-    "@opentui/core": "workspace:*",
+    "@opentui/core": "^0.1.77",
     "@vue/runtime-core": "^3.5.26"
   },
   "peerDependencies": {

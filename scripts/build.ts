@@ -27,8 +27,7 @@ interface PackageJson {
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const rootDir = resolve(__dirname, "..")
-const projectRootDir = resolve(rootDir, "../..")
-const licensePath = join(projectRootDir, "LICENSE")
+const licensePath = join(rootDir, "LICENSE")
 const packageJson: PackageJson = JSON.parse(readFileSync(join(rootDir, "package.json"), "utf8"))
 
 const args = process.argv.slice(2)
@@ -95,14 +94,9 @@ const tsconfigBuild = {
     skipLibCheck: true,
     jsx: "preserve",
     moduleResolution: "bundler",
-    baseUrl: ".",
-    paths: {
-      "@opentui/core": ["../core/dist"],
-      "@opentui/core/*": ["../core/dist/*"],
-    },
   },
   include: ["index.ts", "src/**/*", "types/opentui.d.ts"],
-  exclude: ["**/*.test.ts", "**/*.spec.ts", "example/**/*", "scripts/**/*", "node_modules/**/*", "../core/**/*"],
+  exclude: ["**/*.test.ts", "**/*.spec.ts", "example/**/*", "scripts/**/*", "node_modules/**/*"],
 }
 
 writeFileSync(tsconfigBuildPath, JSON.stringify(tsconfigBuild, null, 2))
@@ -137,9 +131,6 @@ const exports = {
 }
 
 const processedDependencies = { ...packageJson.dependencies }
-if (processedDependencies["@opentui/core"] === "workspace:*") {
-  processedDependencies["@opentui/core"] = packageJson.version
-}
 
 writeFileSync(
   join(distDir, "package.json"),

@@ -77,7 +77,7 @@ export function setupOpenTUIDevtools(app: App, cliRenderer: CliRenderer): void {
       id: PLUGIN_ID,
       label: "OpenTUI",
       packageName: "@opentui/vue",
-      homepage: "https://github.com/sst/opentui",
+      homepage: "https://github.com/GreyElaina/opentui-vue",
       app,
       enableEarlyProxy: true,
       componentStateTypes: ["OpenTUI Renderable", COMPONENT_ATTRS_TYPE],
