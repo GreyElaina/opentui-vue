@@ -83,6 +83,15 @@ await render(App, {
 })
 ```
 
+Optional: use preload for direct `.vue` imports at runtime (similar to `@opentui/solid/preload`):
+
+```toml
+# bunfig.toml
+preload = ["@opentui/vue/preload"]
+```
+
+Then `bun run index.ts` can import `.vue` files directly.
+
 ### 6. Create a build script build.ts.
 
 ```bash

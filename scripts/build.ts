@@ -71,6 +71,7 @@ const entryBuilds = [
   { label: "components subpath", entrypoint: join(rootDir, "src/elements.ts") },
   { label: "devtools subpath", entrypoint: join(rootDir, "src/devtools/index.ts") },
   { label: "resolver subpath", entrypoint: join(rootDir, "src/resolver.ts") },
+  { label: "preload subpath", entrypoint: join(rootDir, "scripts/preload.ts") },
 ] as const
 
 for (const buildTarget of entryBuilds) {
@@ -159,6 +160,10 @@ const exports = {
     types: "./src/resolver.d.ts",
     import: "./src/resolver.js",
     require: "./src/resolver.js",
+  },
+  "./preload": {
+    import: "./scripts/preload.js",
+    require: "./scripts/preload.js",
   },
 }
 
