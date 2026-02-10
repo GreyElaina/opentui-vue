@@ -56,14 +56,28 @@ export function getCurrentCliRenderer(): CliRenderer | null {
   return currentCliRenderer
 }
 
+export interface RenderOptions {
+  renderer?: CliRenderer | CliRendererConfig
+  setupApp?: (app: App, renderer: CliRenderer) => void | Promise<void>
+}
+
+function isRenderOptions(
+  value: CliRenderer | CliRendererConfig | RenderOptions,
+): value is RenderOptions {
+  if (value instanceof CliRenderer) return false
+  if (!value || typeof value !== "object") return false
+  return "renderer" in value || "setupApp" in value
+}
+
 export async function render(
   component: Component,
-  rendererOrConfig: CliRenderer | CliRendererConfig = {},
+  rendererOrConfig: CliRenderer | CliRendererConfig | RenderOptions = {},
 ): Promise<void> {
   const { shouldEnableDevtools, devtoolsCleanup } = await initializeDevtools()
 
+  const rendererSource = isRenderOptions(rendererOrConfig) ? (rendererOrConfig.renderer ?? {}) : rendererOrConfig
   const cliRenderer =
-    rendererOrConfig instanceof CliRenderer ? rendererOrConfig : await createCliRenderer(rendererOrConfig)
+    rendererSource instanceof CliRenderer ? rendererSource : await createCliRenderer(rendererSource)
   currentCliRenderer = cliRenderer
 
   engine.attach(cliRenderer)
@@ -84,6 +98,10 @@ export async function render(
   const app = renderer.createApp(component)
   installOpenTUIComponents(app as App)
   app.provide(cliRendererKey, cliRenderer)
+
+  if (isRenderOptions(rendererOrConfig)) {
+    await rendererOrConfig.setupApp?.(app as App, cliRenderer)
+  }
 
   if (shouldEnableDevtools) {
     try {

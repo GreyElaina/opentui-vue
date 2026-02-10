@@ -69,6 +69,20 @@ import App from "./App.vue"
 render(App)
 ```
 
+Optional: configure the underlying Vue app (for Pinia/plugins) with `setupApp`:
+
+```ts
+import { createPinia } from "pinia"
+import { render } from "@opentui/vue"
+import App from "./App.vue"
+
+await render(App, {
+  setupApp(app) {
+    app.use(createPinia())
+  },
+})
+```
+
 ### 6. Create a build script build.ts.
 
 ```bash
